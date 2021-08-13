@@ -18,7 +18,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/build")));
 
 app.use("/", indexRouter);
 
@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     if (process.env.NODE_ENV !== "production") {
         console.error(err);
+        res.sendFile(path.join(__dirname, "public/build/index.html"));
     }
     console.log("An error occured");
     res.status(err.status || 500);
